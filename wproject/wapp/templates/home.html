@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head >
+    <link rel="stylesheet" href="styles.css">
+    <style>body {
+        background-color: lightblue;
+        text-align: center;
+    }
+
+    .uppercase-text {
+            text-transform: uppercase;
+        }
+    
+    h2 {
+        margin-bottom: 20px;
+    }
+    
+    form {
+        margin-bottom: 20px;
+    }
+    
+    
+    th, td ,button {
+  border: 1px solid black;
+  border-radius: 5px;
+  font-weight: bold;
+}
+    
+     th, td {
+        border: 1px solid #000;
+    }
+    
+    th, td {
+        padding: 10px;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    
+    
+    tr:hover {
+        background-color: #ddd;
+    }
+    
+    #temp_value,
+    #feels_like_value,
+    #temp_min_value,
+    #temp_max_value,
+    #pressure_value,
+    #humidity_value {
+        font-weight: bold;
+    }
+
+    .marquee-container {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background-color: lightblue;
+            font-family: Arial, sans-serif;
+        }
+
+    
+
+    input[type="text"] {
+    width: 300px; /* Set the width of the input field */
+    height: 40px; /* Set the height of the input field */
+    font-size: 18px; /* Set the font size */
+    padding: 10px; /* Add padding inside the input field */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 10px; /* Add rounded corners */
+    transition: width 0.3s ease; /* Add animation to the width property */
+    }
+
+    input[type="text"]:focus {
+            width: 400px; /* Expand the input field on focus */
+        }
+
+        button[type="submit"] {
+            width: 150px; /* Set the width of the button */
+            height: 50px; /* Set the height of the button */
+            font-size: 20px; /* Set the font size */
+            border: 1px; /* Remove the border */
+            background-color: #6dc2c4; /* Set the background color */
+            color: white; /* Set the text color */
+            border-radius: 10px; /* Add rounded corners */
+            cursor: pointer; /* Add a pointer cursor on hover */
+            transition: background-color 0.8s ease; /* Add animation to the background-color property */
+        }
+
+        button[type="submit"]:hover {
+            background-color: #772081; /* Darken the background color on hover */
+        }
+
+        p {
+        font-size: 20px; /* Set the font size */
+        color: #000000; /* Set the text color */
+        margin-top: 10px; /* Add some top margin */
+    }
+
+    </style>
+    
+    <title>weather API</title>
+</head>
+<body><center>
+    <h2>WEATHER API</h2>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="text" name="city" placeholder="Enter The City ">&nbsp&nbsp&nbsp
+        <button type="submit">GET</button>
+    </form>
+    
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% else %}
+        {% if data %}
+        <p class="uppercase-text" style="display: inline-block; margin-right: 5px;">City: {{ city }}&nbsp;<div style="font-size: 30px; display: inline-block; margin-top: -10px;">☁️</div></p>
+<h4>Date Time: {{ date }}</h4>
+
+            <table style="width:50%">
+                <tr>
+                    <td>property</td>
+                    <td>value</td>
+                </tr>
+                {% for x, y in data.items %}
+                <tr>
+                    <td id='{{ x }}_property'>{{ x }}</td>
+                    <td id='{{ x }}_value'>{{ y }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    {% endif %}
+
+
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            x=$("#temp_value").text();
+            x=x-273.15;
+            x=parseFloat(x).toFixed(2)
+            $('#temp_value').text(x + ' °C');
+
+            x=$("#feels_like_value").text();
+            x=x-273.15;
+            x=parseFloat(x).toFixed(2)
+            $('#feels_like_value').text(x + ' °C');
+
+            x=$("#temp_min_value").text();
+            x=x-273.15;
+            x=parseFloat(x).toFixed(2)
+            $('#temp_min_value').text(x + ' °C');
+
+            x=$("#temp_max_value").text();
+            x=x-273.15;
+            x=parseFloat(x).toFixed(2)
+            $('#temp_max_value').text(x + ' °C');
+
+            x=$("#pressure_value").text();
+            $("#pressure_value").text(x + " mBar");
+
+            x=$("#humidity_value").text();
+            $("#humidity_value").text(x + " %");
+
+            $("#temp_property").text("Temperature");
+            $("#temp_min_property").text("Minimum Temperature");
+            $("#temp_max_property").text('Maximum Temperature');
+            $("#feels_like_property").text("Feels Like");
+            $("#humidity_property").text("Humidity");
+            $("#pressure_property").text("Pressure");
+        })
+    </script>  
+    </center> 
+    
+    <div class="marquee-container">
+        <marquee scrollamount="6" width="100%">
+            <font><h4>This Is A Webpage Developed Using Html, Css, Javascript with Django Framework using RestAPI</h4></font>
+        </marquee>
+    </div>
+    </body>
+    
+</html>
+<!--
+
+    
+    <h2>welcome</h2>
+<input type="text" name="location" placeholder="enter city name" required>
+<button type="submit">check</button><br>
+<h3>{{c_name}}</h3>
+
+-->
+<!--
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>weather API</title>
+    </head>
+    <body>
+        <h2>WEATHER API</h2>
+        <form action="" method="POST">
+            {%csrf_token%}
+            <input type="text" name="city" placeholder="enter city name">
+            <button type="submit">get method</button></form>
+            {% if error_message %}
+                <p>{{ error_message }}</p>
+            {% endif %}
+
+            {% if data %}
+            <P>City: {{city}}</P>
+            <P>date: {{date}}</P>
+            <table>
+                <tr>
+                    <td>property</td>
+                    <td>value</td>
+                </tr>
+                {% for x,y in data.items %}
+                <tr>
+                    <td id='{{ x }}_property'>{{x}}</td>
+                    <td id='{{ x }}_value'>{{y}}</td>
+                </tr>
+                
+                {% endfor %}
+                
+            
+            </table>
+            {% endif %}
+            
+            
+            
+        
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                x=$("#temp_value").text();
+                x=x-273.15;
+                x=parseFloat(x).toFixed(2)
+                $('#temp_value').text(x + ' °C');
+
+                x=$("#feels_like_value").text();
+                x=x-273.15;
+                x=parseFloat(x).toFixed(2)
+                $('#feels_like_value').text(x + ' °C');
+
+                x=$("#temp_min_value").text();
+                x=x-273.15;
+                x=parseFloat(x).toFixed(2)
+                $('#temp_min_value').text(x + ' °C');
+
+                x=$("#temp_max_value").text();
+                x=x-273.15;
+                x=parseFloat(x).toFixed(2)
+                $('#temp_max_value').text(x + ' °C');
+
+                x=$("#pressure_value").text();
+                $("#pressure_value").text(x + " mBar");
+
+                x=$("#humidity_value").text();
+                $("#humidity_value").text(x + " %");
+ 
+                $("#temp_property").text("Temperature");
+                $("#temp_min_property").text("Minimum Temperature");
+                $("#temp_max_property").text('Maximum Temperature');
+                $("#feels_like_property").text("Feels Like");
+                $("#humidity_property").text("Humidity");
+                $("#pressure_property").text("Pressure");
+
+
+            })
+        </script>   
+    </body>
+</html>-->

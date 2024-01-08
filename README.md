@@ -1,0 +1,1 @@
+The Weather Application is a web-based tool built using the Django web framework that allows users to check the current weather conditions for a specific location. The application leverages third-party APIs, such as OpenWeatherMap, to fetch real-time weather data.
